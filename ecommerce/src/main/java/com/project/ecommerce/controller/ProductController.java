@@ -10,40 +10,35 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "*") // Allows all frontends to connect (React, etc.)
+@CrossOrigin(origins = "*")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    // Add Product
-    @PostMapping("/add")
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
-    }
-
-    // Get All Products
-    @GetMapping("/all")
+    @GetMapping
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
-    // Get Product by ID
     @GetMapping("/{id}")
     public Optional<Product> getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
-    //  Update Product
-    @PutMapping("/update/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
-        return productService.updateProduct(id, productDetails);
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        return productService.saveProduct(product);
     }
 
-    // Delete Product
-    @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        product.setId(id);
+        return productService.saveProduct(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return "Product deleted successfully!";
     }
 }

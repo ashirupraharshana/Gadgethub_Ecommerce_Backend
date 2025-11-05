@@ -1,0 +1,21 @@
+package com.project.ecommerce.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import java.util.Date;
+
+@Data
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String username;
+    private String email;
+    private String phone;
+    private String password;
+    private int userrole;
+    private Date date;
+}
